@@ -1,4 +1,4 @@
-package com.designpatterns.barberx.cliente;
+package com.designpatterns.barberx.customer;
 
 import java.util.Optional;
 import java.util.UUID;

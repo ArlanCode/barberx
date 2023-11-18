@@ -1,4 +1,4 @@
-package com.designpatterns.barberx.cliente;
+package com.designpatterns.barberx.customer;
 
 import com.designpatterns.barberx.person.PersonModel;
 

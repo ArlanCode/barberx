@@ -5,7 +5,7 @@ import java.time.LocalDateTime;
 import java.util.UUID;
 
 import com.designpatterns.barberx.barber.BarberModel;
-import com.designpatterns.barberx.cliente.ClientModel;
+import com.designpatterns.barberx.customer.ClientModel;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;

@@ -10,8 +10,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.designpatterns.barberx.barber.BarberModel;
 import com.designpatterns.barberx.barber.IBarberRepository;
-import com.designpatterns.barberx.cliente.ClientModel;
-import com.designpatterns.barberx.cliente.IClientRepository;
+import com.designpatterns.barberx.customer.ClientModel;
+import com.designpatterns.barberx.customer.IClientRepository;
 
 @RestController
 @RequestMapping("/appointments")
@@ -30,8 +30,8 @@ public class AppointmentController {
     @PostMapping("/")
     public ResponseEntity<?> create(@RequestBody AppointmentModel appointmentModel){
 
-       BarberModel barber = barberRepository.findById(appointmentModel.getBarber().getId()).orElseThrow(() -> new RuntimeException("Barber não encontrado"));
-        ClientModel client = clientRepository.findById(appointmentModel.getClient().getId()).orElseThrow(() -> new RuntimeException("Cliente não encontrado"));
+       BarberModel barber = barberRepository.findByUsername(appointmentModel.getBarber().getUsername()).orElseThrow(() -> new RuntimeException("Barber não encontrado"));
+        ClientModel client = clientRepository.findByUsername(appointmentModel.getClient().getUsername()).orElseThrow(() -> new RuntimeException("Cliente não encontrado"));
 
         appointmentModel.setBarber(barber);
         appointmentModel.setClient(client);
