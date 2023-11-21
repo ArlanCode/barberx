@@ -3,40 +3,41 @@ package com.designpatterns.barberx.appointment;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.designpatterns.barberx.barber.BarberModel;
-import com.designpatterns.barberx.barber.IBarberRepository;
-import com.designpatterns.barberx.customer.ClientModel;
-import com.designpatterns.barberx.customer.IClientRepository;
+import com.designpatterns.barberx.appointment.state.AppointmentSevice;
+
 
 @RestController
 @RequestMapping("/appointments")
 public class AppointmentController {
 
-    @Autowired
-    IAppointmentRepository appointmentRepository;
 
-    @Autowired
-    IBarberRepository barberRepository;
-
-    @Autowired
-    IClientRepository clientRepository;
+   @Autowired
+   private AppointmentSevice appointmentService;
 
 
     @PostMapping("/")
     public ResponseEntity<?> create(@RequestBody AppointmentModel appointmentModel){
+        appointmentService.createAppointment(appointmentModel);
 
-       BarberModel barber = barberRepository.findByUsername(appointmentModel.getBarber().getUsername()).orElseThrow(() -> new RuntimeException("Barber não encontrado"));
-        ClientModel client = clientRepository.findByUsername(appointmentModel.getClient().getUsername()).orElseThrow(() -> new RuntimeException("Cliente não encontrado"));
+        return ResponseEntity.status(HttpStatus.CREATED).body(appointmentModel);
+    }
+    
+    @PostMapping("/{appointmentId}/cancel")
+    public ResponseEntity<String> cancelAppointment(@PathVariable Long appointmentId) {
+        appointmentService.cancelAppointment(appointmentId);
+        return ResponseEntity.ok("Appointment canceled successfully");
+    }
 
-        appointmentModel.setBarber(barber);
-        appointmentModel.setClient(client);
-
-        return ResponseEntity.status(HttpStatus.CREATED).body(appointmentRepository.save(appointmentModel));
+    @PostMapping("/{appointmentId}/accept")
+    public ResponseEntity<String> acceptAppointment(@PathVariable Long appointmentId) {
+        appointmentService.acceptAppointment(appointmentId);
+        return ResponseEntity.ok("Appointment accepted successfully");
     }
     
 }

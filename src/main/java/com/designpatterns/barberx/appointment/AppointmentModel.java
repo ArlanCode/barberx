@@ -2,8 +2,8 @@ package com.designpatterns.barberx.appointment;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
-import java.util.UUID;
 
+import com.designpatterns.barberx.appointment.state.AppointmentState;
 import com.designpatterns.barberx.barber.BarberModel;
 import com.designpatterns.barberx.customer.ClientModel;
 
@@ -24,8 +24,8 @@ public class AppointmentModel implements Serializable{
     private static final long serialVersionUID = 1L;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private UUID id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     @ManyToOne
     @JoinColumn(name = "client_id")
@@ -36,4 +36,18 @@ public class AppointmentModel implements Serializable{
     private BarberModel barber;
 
     private LocalDateTime appointmentDateTime;
+    
+    private AppointmentState state;
+    
+    public void cancel() {
+        state.cancel();
+    }
+
+    public void accept() {
+        state.accept();
+    }
+
+    public void setState(AppointmentState state) {
+        this.state = state;
+    }
 }

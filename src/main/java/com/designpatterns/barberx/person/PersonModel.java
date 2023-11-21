@@ -2,8 +2,6 @@ package com.designpatterns.barberx.person;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
-import java.util.UUID;
-
 import org.hibernate.annotations.CreationTimestamp;
 
 import jakarta.persistence.Column;
@@ -19,9 +17,9 @@ public abstract class PersonModel implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private UUID id;
-
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    
     @Column(unique = true)
     private String username;
     private String fullName;
