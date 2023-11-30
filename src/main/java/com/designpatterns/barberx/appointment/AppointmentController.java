@@ -4,12 +4,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
+//import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import com.designpatterns.barberx.appointment.state.AppointmentSevice;
 
 
 @RestController
@@ -18,7 +18,7 @@ public class AppointmentController {
 
 
    @Autowired
-   private AppointmentSevice appointmentService;
+   private AppointmentService appointmentService;
 
 
     @PostMapping("/")
@@ -28,16 +28,17 @@ public class AppointmentController {
         return ResponseEntity.status(HttpStatus.CREATED).body(appointmentModel);
     }
     
-    @PostMapping("/{appointmentId}/cancel")
+    @PutMapping("/{appointmentId}/cancel")
     public ResponseEntity<String> cancelAppointment(@PathVariable Long appointmentId) {
-        appointmentService.cancelAppointment(appointmentId);
-        return ResponseEntity.ok("Appointment canceled successfully");
+        
+        return ResponseEntity.ok(appointmentService.cancelAppointment(appointmentId));
     }
 
-    @PostMapping("/{appointmentId}/accept")
+    
+    @PutMapping("/{appointmentId}/accept")
     public ResponseEntity<String> acceptAppointment(@PathVariable Long appointmentId) {
         appointmentService.acceptAppointment(appointmentId);
-        return ResponseEntity.ok("Appointment accepted successfully");
+        return ResponseEntity.ok(appointmentService.acceptAppointment(appointmentId));
     }
     
 }

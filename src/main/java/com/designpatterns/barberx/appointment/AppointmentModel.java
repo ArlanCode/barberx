@@ -3,16 +3,19 @@ package com.designpatterns.barberx.appointment;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
-import com.designpatterns.barberx.appointment.state.AppointmentState;
 import com.designpatterns.barberx.barber.BarberModel;
 import com.designpatterns.barberx.customer.ClientModel;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+
 import jakarta.persistence.Table;
 
 import lombok.Data;
@@ -35,19 +38,15 @@ public class AppointmentModel implements Serializable{
     @JoinColumn(name = "barber_id")
     private BarberModel barber;
 
+    @Enumerated(EnumType.STRING)
+    @Column(name = "state")
+    private EnumState enumState = EnumState.PENDING;
+
+    public void setEnumState(EnumState enumState){
+        this.enumState = enumState;
+        this.client.update(enumState);
+        this.barber.update(enumState);
+    }
+
     private LocalDateTime appointmentDateTime;
-    
-    private AppointmentState state;
-    
-    public void cancel() {
-        state.cancel();
-    }
-
-    public void accept() {
-        state.accept();
-    }
-
-    public void setState(AppointmentState state) {
-        this.state = state;
-    }
 }

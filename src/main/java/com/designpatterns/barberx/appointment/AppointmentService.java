@@ -1,10 +1,8 @@
-package com.designpatterns.barberx.appointment.state;
+package com.designpatterns.barberx.appointment;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.designpatterns.barberx.appointment.AppointmentModel;
-import com.designpatterns.barberx.appointment.IAppointmentRepository;
 import com.designpatterns.barberx.barber.BarberModel;
 import com.designpatterns.barberx.barber.IBarberRepository;
 import com.designpatterns.barberx.customer.ClientModel;
@@ -12,7 +10,7 @@ import com.designpatterns.barberx.customer.IClientRepository;
 import com.designpatterns.barberx.erro.AppointmentNotFoundException;
 
 @Service
-public class AppointmentSevice {
+public class AppointmentService {
 
    @Autowired
     IAppointmentRepository appointmentRepository;
@@ -25,8 +23,8 @@ public class AppointmentSevice {
 
     
     public AppointmentModel createAppointment(AppointmentModel appointmentModel) {
-        BarberModel barber = barberRepository.findByUsername(appointmentModel.getBarber().getUsername()).orElseThrow(() -> new RuntimeException("Barber não encontrado"));
-        ClientModel client = clientRepository.findByUsername(appointmentModel.getClient().getUsername()).orElseThrow(() -> new RuntimeException("Cliente não encontrado"));
+        BarberModel barber = barberRepository.findByUsername(appointmentModel.getBarber().getUsername()).orElseThrow(() -> new AppointmentNotFoundException("Barbeiro não encontrado"));
+        ClientModel client = clientRepository.findByUsername(appointmentModel.getClient().getUsername()).orElseThrow(() -> new AppointmentNotFoundException("Cliente não encontrado"));
         appointmentModel.setBarber(barber);
         appointmentModel.setClient(client);
         appointmentRepository.save(appointmentModel);
@@ -39,15 +37,40 @@ public class AppointmentSevice {
                 .orElseThrow(() -> new AppointmentNotFoundException("Appointment not found with ID: " + appointmentId));
     }
 
-    public void cancelAppointment(Long appointmentId) {
-        AppointmentModel appointment = getAppointmentById(appointmentId);
-        appointment.cancel();
-        appointmentRepository.save(appointment);
+    private State getState(AppointmentModel appointment) {
+        State state;
+        switch (appointment.getEnumState()) {
+
+            case CANCELED:
+                state = new CanceledState();
+                break;
+
+            case ACCEPTED:
+                state = new AcceptedState(appointment);
+                break;
+        
+            default:
+                state =  new PendingState(appointment);
+                break;
+        }
+
+        return state;
     }
 
-    public void acceptAppointment(Long appointmentId) {
+    public String cancelAppointment(Long appointmentId) {
         AppointmentModel appointment = getAppointmentById(appointmentId);
-        appointment.accept();
+        State state = getState(appointment);
+        String status = state.cancel();
         appointmentRepository.save(appointment);
+        return status;
     }
+
+    public String acceptAppointment(Long appointmentId) {
+        AppointmentModel appointment = getAppointmentById(appointmentId);
+        State state = getState(appointment);
+        String status = state.accept();
+        appointmentRepository.save(appointment);
+        return status;
+    }
+    
 }

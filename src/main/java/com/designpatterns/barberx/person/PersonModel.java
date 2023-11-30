@@ -25,6 +25,8 @@ public abstract class PersonModel implements Serializable {
     private String fullName;
     private String password;
 
+    
+
     @CreationTimestamp
     private LocalDateTime createdAt;
 }
