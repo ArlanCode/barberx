@@ -1,4 +1,4 @@
-package com.designpatterns.barberx.appointment;
+package com.designpatterns.barberx.state;
 
 public class CanceledState implements State{
 

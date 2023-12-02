@@ -1,4 +1,6 @@
-package com.designpatterns.barberx.appointment;
+package com.designpatterns.barberx.state;
+
+import com.designpatterns.barberx.models.AppointmentModel;
 
 public class AcceptedState implements State {
     AppointmentModel appointment;

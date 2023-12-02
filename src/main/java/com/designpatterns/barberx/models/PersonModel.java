@@ -1,4 +1,4 @@
-package com.designpatterns.barberx.person;
+package com.designpatterns.barberx.models;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;

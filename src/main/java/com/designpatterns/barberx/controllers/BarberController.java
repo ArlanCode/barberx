@@ -1,4 +1,4 @@
-package com.designpatterns.barberx.barber;
+package com.designpatterns.barberx.controllers;
 
 import java.util.Map;
 
@@ -10,6 +10,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.designpatterns.barberx.dtos.BarberRecordDto;
+import com.designpatterns.barberx.models.BarberModel;
+import com.designpatterns.barberx.repositories.IBarberRepository;
 
 import jakarta.validation.Valid;
 

@@ -1,4 +1,4 @@
-package com.designpatterns.barberx.customer;
+package com.designpatterns.barberx.models;
 
 import org.springframework.beans.BeanUtils;
 

@@ -1,8 +1,7 @@
-package com.designpatterns.barberx.customer;
+package com.designpatterns.barberx.models;
 
-import com.designpatterns.barberx.appointment.AppointmentObserver;
-import com.designpatterns.barberx.appointment.EnumState;
-import com.designpatterns.barberx.person.PersonModel;
+import com.designpatterns.barberx.observer.AppointmentObserver;
+import com.designpatterns.barberx.state.EnumState;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;

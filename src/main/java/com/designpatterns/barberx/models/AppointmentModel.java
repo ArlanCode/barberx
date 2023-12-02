@@ -1,10 +1,9 @@
-package com.designpatterns.barberx.appointment;
+package com.designpatterns.barberx.models;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
-import com.designpatterns.barberx.barber.BarberModel;
-import com.designpatterns.barberx.customer.ClientModel;
+import com.designpatterns.barberx.state.EnumState;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

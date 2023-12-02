@@ -1,16 +1,22 @@
-package com.designpatterns.barberx.appointment;
+package com.designpatterns.barberx.facade;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.designpatterns.barberx.barber.BarberModel;
-import com.designpatterns.barberx.barber.IBarberRepository;
-import com.designpatterns.barberx.customer.ClientModel;
-import com.designpatterns.barberx.customer.IClientRepository;
 import com.designpatterns.barberx.erro.AppointmentNotFoundException;
+import com.designpatterns.barberx.models.AppointmentModel;
+import com.designpatterns.barberx.models.BarberModel;
+import com.designpatterns.barberx.models.ClientModel;
+import com.designpatterns.barberx.repositories.IAppointmentRepository;
+import com.designpatterns.barberx.repositories.IBarberRepository;
+import com.designpatterns.barberx.repositories.IClientRepository;
+import com.designpatterns.barberx.state.AcceptedState;
+import com.designpatterns.barberx.state.CanceledState;
+import com.designpatterns.barberx.state.PendingState;
+import com.designpatterns.barberx.state.State;
 
 @Service
-public class AppointmentService {
+public class AppointmentFacade {
 
    @Autowired
     IAppointmentRepository appointmentRepository;
