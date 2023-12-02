@@ -1,19 +1,20 @@
 package com.designpatterns.barberx.controllers;
 
-import java.util.Map;
+import java.util.List;
 
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.designpatterns.barberx.dtos.BarberRecordDto;
+import com.designpatterns.barberx.facade.BarberFacade;
 import com.designpatterns.barberx.models.BarberModel;
-import com.designpatterns.barberx.repositories.IBarberRepository;
 
 import jakarta.validation.Valid;
 
@@ -22,25 +23,21 @@ import jakarta.validation.Valid;
 public class BarberController {
 
     @Autowired
-    IBarberRepository barberRepository;
+    BarberFacade barberFacade;
     
     @PostMapping("/")
     public ResponseEntity<?> create(@RequestBody @Valid BarberRecordDto barberRecordDto){
+        return ResponseEntity.status(HttpStatus.CREATED).body(barberFacade.createBarber(barberRecordDto));
+    }
 
-        var barberModel = new BarberModel();
-        BeanUtils.copyProperties(barberRecordDto, barberModel);
+    @GetMapping("/all")
+    public ResponseEntity<List<BarberModel>> getAllBarbers(){
+        return ResponseEntity.ok(barberFacade.getAllBarbers());
+    }
 
-        var user = this.barberRepository.findByUsername(barberModel.getUsername());
-
-        if (user.isPresent()) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                                 .body(Map.of("error", "Usuário existente", "details", "Esse 'username' já pertence a outro cliente"));
-        }
-
-
-        return ResponseEntity.status(HttpStatus.CREATED).body(this.barberRepository.save(barberModel));
-
-
+    @GetMapping("/{barberId}")
+    public ResponseEntity<?> getBarberById(@PathVariable Long barberId){
+        return ResponseEntity.ok(barberFacade.getBarberById(barberId));
     }
 
 }

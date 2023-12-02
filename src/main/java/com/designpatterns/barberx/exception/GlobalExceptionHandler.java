@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import com.designpatterns.barberx.erro.AppointmentNotFoundException;
+import com.designpatterns.barberx.erro.DuplicateUsernameException;
 
 @ControllerAdvice
 public class GlobalExceptionHandler {
@@ -15,5 +16,9 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage());
     }
 
+    @ExceptionHandler(DuplicateUsernameException.class)
+    public ResponseEntity<String> handleDuplicateUsernameException(DuplicateUsernameException ex) {
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(ex.getMessage());
+    }
 }
 

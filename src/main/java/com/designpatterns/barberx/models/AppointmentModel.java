@@ -39,7 +39,7 @@ public class AppointmentModel implements Serializable{
 
     @Enumerated(EnumType.STRING)
     @Column(name = "state")
-    private EnumState enumState = EnumState.PENDING;
+    private EnumState enumState;
 
     public void setEnumState(EnumState enumState){
         this.enumState = enumState;
