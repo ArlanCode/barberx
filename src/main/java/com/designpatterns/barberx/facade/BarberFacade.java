@@ -36,6 +36,10 @@ public class BarberFacade {
 
     public BarberModel getBarberById(Long barberId) {
         return barberRepository.findById(barberId)
-            .orElseThrow(() -> new PersonNotFoundException("Appointment not found with ID: " + barberId));
+            .orElseThrow(() -> new PersonNotFoundException("Barber not found with ID: " + barberId));
+    }
+
+    public void deleteBarber(Long barberId){
+        barberRepository.delete(getBarberById(barberId));
     }
 }
