@@ -16,8 +16,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.designpatterns.barberx.dtos.AppointmentRecordDto;
-import com.designpatterns.barberx.facade.AppointmentFacade;
 import com.designpatterns.barberx.models.AppointmentModel;
+import com.designpatterns.barberx.services.facade.AppointmentFacade;
 
 import jakarta.validation.Valid;
 

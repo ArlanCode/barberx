@@ -1,4 +1,4 @@
-package com.designpatterns.barberx.facade;
+package com.designpatterns.barberx.services.facade;
 
 import java.util.List;
 
@@ -10,12 +10,16 @@ import com.designpatterns.barberx.dtos.ClientRecordDto;
 import com.designpatterns.barberx.erro.DuplicateUsernameException;
 import com.designpatterns.barberx.erro.PersonNotFoundException;
 import com.designpatterns.barberx.models.ClientModel;
+import com.designpatterns.barberx.observer.AppointmentObserver;
 import com.designpatterns.barberx.repositories.IClientRepository;
+import com.designpatterns.barberx.services.EmailService;
 
 @Service
-public class ClientFacade {
+public class ClientFacade implements AppointmentObserver{
     @Autowired
     IClientRepository clientRepository;
+    @Autowired
+    EmailService emailService;
 
     public ClientModel createClient(ClientRecordDto clientRecordDto){
         if(clientRepository.findByUsername(clientRecordDto.username()).isPresent()){
@@ -39,5 +43,10 @@ public class ClientFacade {
 
     public void deleteClientById(Long clientId){
         clientRepository.delete(getClientById(clientId));
+    }
+
+    @Override
+    public void notifyByEmail(String to, String subject, String body) {
+        emailService.sendEmail(to, subject, body);
     }
 }

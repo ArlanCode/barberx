@@ -23,6 +23,7 @@ public abstract class PersonModel implements Serializable {
     @Column(unique = true)
     private String username;
     private String fullName;
+    private String email;
     private String password;
 
     

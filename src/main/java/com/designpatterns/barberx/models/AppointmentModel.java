@@ -43,8 +43,6 @@ public class AppointmentModel implements Serializable{
 
     public void setEnumState(EnumState enumState){
         this.enumState = enumState;
-        this.client.update(enumState);
-        this.barber.update(enumState);
     }
 
     private LocalDateTime appointmentDateTime;

@@ -1,4 +1,4 @@
-package com.designpatterns.barberx.facade;
+package com.designpatterns.barberx.services.facade;
 
 import java.util.List;
 

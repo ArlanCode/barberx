@@ -1,4 +1,4 @@
-package com.designpatterns.barberx.facade;
+package com.designpatterns.barberx.services.facade;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -32,6 +32,9 @@ public class AppointmentFacade {
 
     @Autowired
     IClientRepository clientRepository;
+
+    @Autowired
+    ClientFacade clientFacade;
 
     
     public AppointmentModel createAppointment(AppointmentRecordDto appointmentRecordDto) {
@@ -96,6 +99,7 @@ public class AppointmentFacade {
         State state = getState(appointment);
         String status = state.cancel();
         appointmentRepository.save(appointment);
+        notifyClient(appointment);
         return status;
     }
 
@@ -104,7 +108,12 @@ public class AppointmentFacade {
         State state = getState(appointment);
         String status = state.accept();
         appointmentRepository.save(appointment);
+        notifyClient(appointment);
         return status;
+    }
+
+    public void notifyClient(AppointmentModel appointment){
+        clientFacade.notifyByEmail(appointment.getClient().getEmail(), "Appointment Update", "Your appointment state has been updated to: " + appointment.getEnumState());
     }
 
 }
