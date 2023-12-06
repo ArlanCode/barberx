@@ -1,0 +1,12 @@
+.buttonsOption {
+    width: 100vw;
+    display: flex;
+    justify-content: center;
+}
+
+.buttonsDiv {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    /* width: 400px; */
+}

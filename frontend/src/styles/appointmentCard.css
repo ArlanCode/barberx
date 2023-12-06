@@ -1,0 +1,13 @@
+.sectionAppointment {
+    width: 50vw;
+    max-width: 1000px;
+    background-color: rgb(115, 115, 115);
+}
+
+.appointmentCard {
+    display: flex;
+    font-size: 6px;
+    justify-content: space-between;
+    color: whitesmoke;
+    padding: 2px 14px;
+}

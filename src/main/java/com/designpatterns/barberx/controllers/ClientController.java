@@ -20,16 +20,15 @@ import com.designpatterns.barberx.services.facade.ClientFacade;
 
 import jakarta.validation.Valid;
 
-
 @RestController
 @RequestMapping("/clients")
 public class ClientController {
 
     @Autowired
     ClientFacade clienteFacade;
-    
+
     @PostMapping("/")
-    public ResponseEntity<?> create(@RequestBody @Valid ClientRecordDto clientRecordDto){
+    public ResponseEntity<?> create(@RequestBody @Valid ClientRecordDto clientRecordDto) {
         return ResponseEntity.status(HttpStatus.CREATED).body(clienteFacade.createClient(clientRecordDto));
     }
 
@@ -39,17 +38,17 @@ public class ClientController {
     }
 
     @GetMapping("/{clientId}")
-    public ResponseEntity<?> getClientById(@PathVariable Long clientId){
+    public ResponseEntity<?> getClientById(@PathVariable Long clientId) {
         return ResponseEntity.ok(clienteFacade.getClientById(clientId));
     }
 
     @GetMapping("/all")
-    public ResponseEntity<List<ClientModel>> getAllClients(){
+    public ResponseEntity<List<ClientModel>> getAllClients() {
         return ResponseEntity.ok(clienteFacade.getAllClients());
     }
 
     @DeleteMapping("/{clientId}")
-    public ResponseEntity<String> deleteClient(@PathVariable Long clientId){
+    public ResponseEntity<String> deleteClient(@PathVariable Long clientId) {
         clienteFacade.deleteClientById(clientId);
         return ResponseEntity.ok("Client deleted successfully");
     }
