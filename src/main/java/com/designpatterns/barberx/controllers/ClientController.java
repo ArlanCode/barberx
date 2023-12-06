@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.designpatterns.barberx.dtos.ClientRecordDto;
+import com.designpatterns.barberx.dtos.LoginRecordDto;
 import com.designpatterns.barberx.models.ClientModel;
 import com.designpatterns.barberx.services.facade.ClientFacade;
 
@@ -30,6 +31,11 @@ public class ClientController {
     @PostMapping("/")
     public ResponseEntity<?> create(@RequestBody @Valid ClientRecordDto clientRecordDto){
         return ResponseEntity.status(HttpStatus.CREATED).body(clienteFacade.createClient(clientRecordDto));
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity<?> login(@RequestBody @Valid LoginRecordDto loginRecordDto){
+        return ResponseEntity.ok(clienteFacade.verificarLogin(loginRecordDto));
     }
 
     @GetMapping("/{clientId}")

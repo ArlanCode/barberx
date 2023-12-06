@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import com.designpatterns.barberx.erro.AppointmentNotFoundException;
 import com.designpatterns.barberx.erro.DuplicateUsernameException;
+import com.designpatterns.barberx.erro.IncorrectPasswordException;
 import com.designpatterns.barberx.erro.PersonNotFoundException;
 
 @ControllerAdvice
@@ -25,6 +26,11 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(PersonNotFoundException.class)
     public ResponseEntity<String> handlePersonNotFoundException(PersonNotFoundException ex) {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage());
+    }
+
+    @ExceptionHandler(IncorrectPasswordException.class)
+    public ResponseEntity<String> handleIncorrectPasswordException(IncorrectPasswordException ex) {
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(ex.getMessage());
     }
 }
 

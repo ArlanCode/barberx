@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.designpatterns.barberx.dtos.BarberRecordDto;
+import com.designpatterns.barberx.dtos.LoginRecordDto;
 import com.designpatterns.barberx.models.BarberModel;
 import com.designpatterns.barberx.services.facade.BarberFacade;
 
@@ -29,6 +30,11 @@ public class BarberController {
     @PostMapping("/")
     public ResponseEntity<?> create(@RequestBody @Valid BarberRecordDto barberRecordDto){
         return ResponseEntity.status(HttpStatus.CREATED).body(barberFacade.createBarber(barberRecordDto));
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity<?> login(@RequestBody @Valid LoginRecordDto loginRecordDto){
+        return ResponseEntity.ok(barberFacade.verificarLogin(loginRecordDto));
     }
 
     @GetMapping("/all")

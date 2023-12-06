@@ -7,7 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.designpatterns.barberx.dtos.BarberRecordDto;
+import com.designpatterns.barberx.dtos.LoginRecordDto;
 import com.designpatterns.barberx.erro.DuplicateUsernameException;
+import com.designpatterns.barberx.erro.IncorrectPasswordException;
 import com.designpatterns.barberx.erro.PersonNotFoundException;
 import com.designpatterns.barberx.models.BarberModel;
 import com.designpatterns.barberx.repositories.IBarberRepository;
@@ -30,6 +32,14 @@ public class BarberFacade {
             return barber;
     }
 
+    public BarberModel verificarLogin(LoginRecordDto loginRecordDto){
+        BarberModel barber = getBarberByUsername(loginRecordDto.username());
+        if (loginRecordDto.password().compareTo(barber.getPassword()) != 0) {
+            throw new IncorrectPasswordException("Incorrect password");
+        }
+        return barber;
+    }
+
     public List<BarberModel> getAllBarbers() {
         return barberRepository.findAll();
     }
@@ -37,6 +47,11 @@ public class BarberFacade {
     public BarberModel getBarberById(Long barberId) {
         return barberRepository.findById(barberId)
             .orElseThrow(() -> new PersonNotFoundException("Barber not found with ID: " + barberId));
+    }
+
+    public BarberModel getBarberByUsername(String barberUsername) {
+        return barberRepository.findByUsername(barberUsername)
+            .orElseThrow(() -> new PersonNotFoundException("Barber not found with Username: " + barberUsername));
     }
 
     public void deleteBarber(Long barberId){
