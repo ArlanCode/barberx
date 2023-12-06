@@ -46,6 +46,15 @@ public class AppointmentController {
         return ResponseEntity.ok(appointmentService.getAppointmentById(appointmentId));
     }
 
+    @GetMapping("/all/barber/{barberId}")
+    public ResponseEntity<List<AppointmentModel>> getAllAppointmentsByIdBarber(@PathVariable Long barberId) {
+        return ResponseEntity.ok(appointmentService.getAllAppointmentsByIdBarber(barberId));
+    }
+
+    @GetMapping("/all/client/{clientId}")
+    public ResponseEntity<List<AppointmentModel>> getAllAppointmentsByIdClient(@PathVariable Long clientId) {
+        return ResponseEntity.ok(appointmentService.getAllAppointmentsByIdClient(clientId));
+    }
 
     @PutMapping("/{appointmentId}/cancel")
     public ResponseEntity<?> cancelAppointment(@PathVariable Long appointmentId) { 

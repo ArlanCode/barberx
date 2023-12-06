@@ -36,6 +36,9 @@ public class AppointmentFacade {
     @Autowired
     ClientFacade clientFacade;
 
+    @Autowired
+    BarberFacade barberFacade;
+
     
     public AppointmentModel createAppointment(AppointmentRecordDto appointmentRecordDto) {
         BarberModel barber = barberRepository.findByUsername(appointmentRecordDto.barberUsername()).orElseThrow(() -> new AppointmentNotFoundException("Barber not found"));
@@ -59,6 +62,16 @@ public class AppointmentFacade {
     public AppointmentModel getAppointmentById(Long appointmentId) {
         return appointmentRepository.findById(appointmentId)
             .orElseThrow(() -> new AppointmentNotFoundException("Appointment not found with ID: " + appointmentId));
+    }
+
+    public List<AppointmentModel> getAllAppointmentsByIdBarber(Long idBarber) {
+        BarberModel barber = barberFacade.getBarberById(idBarber);
+        return appointmentRepository.findByBarber(barber);
+    }
+
+    public List<AppointmentModel> getAllAppointmentsByIdClient(Long idClient) {
+        ClientModel client = clientFacade.getClientById(idClient);
+        return appointmentRepository.findByClient(client);
     }
 
     public AppointmentModel updateAppointmentTime(Long appointmentId, LocalDateTime newDateTime) {
