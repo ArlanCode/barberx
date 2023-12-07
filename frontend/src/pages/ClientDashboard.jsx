@@ -7,6 +7,7 @@ import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
 import dayjs from "dayjs";
+import logo from "../assets/logo.png";
 
 export default function ClientDashboard() {
   const [user, setUser] = useState({});
@@ -77,26 +78,24 @@ export default function ClientDashboard() {
   }, [time]);
 
   return (
-    <section
-      style={{
-        width: "100vw",
-        display: "flex",
-        justifyContent: "center",
-        flexDirection: "column",
-        alignItems: "center",
-      }}
-    >
+    <section className="clientDashSection">
+      <img src={logo} style={{ width: "40%" }} />
       <div className="clientDashboard">
-        <h1 style={{ fontSize: "30px", fontStyle: "italic" }}>
-          Oi {user.username}, com quem iremos marcar hoje?
+        <h1
+          style={{
+            fontSize: "23px",
+            fontStyle: "italic",
+            marginBottom: "10px",
+          }}
+        >
+          Oi <span style={{ color: "yellow" }}>{user.username}</span>, quem será
+          o barbeiro da vez?
         </h1>
-        <h3 style={{ fontSize: "20px", fontStyle: "italic" }}>
-          (Seus agendamentos:)
-        </h3>
+        <h3 style={{ fontSize: "15px" }}>(Seus agendamentos atuais:)</h3>
         <div
           className="appointmentsContainer"
           style={{
-            marginBottom: "15px",
+            marginBottom: "100px",
             display: "flex",
             flexDirection: "column",
             gap: "7px",
@@ -130,8 +129,7 @@ export default function ClientDashboard() {
             );
           })}
         </div>
-        <h3>-------------</h3>
-        <h1 style={{ fontSize: "25px", fontWeight: "bold" }}>
+        <h1 style={{ fontSize: "23px", fontWeight: "bold" }}>
           Barbeiros Disponíveis:
         </h1>
 
@@ -164,22 +162,33 @@ export default function ClientDashboard() {
           marginTop: "50px",
         }}
       >
-        <LocalizationProvider dateAdapter={AdapterDayjs}>
-          <DemoContainer components={["DateTimePicker"]}>
-            <DateTimePicker
-              label="Seleciona o dia e a hora"
-              value={time}
-              onChange={(newValue) => {
-                setTime(newValue);
-              }}
-              disabled={dataPickerDisable}
-            />
-          </DemoContainer>
-        </LocalizationProvider>
+        <div
+          style={{
+            backgroundColor: "white",
+            padding: "10px 20px",
+            borderRadius: "10px",
+          }}
+        >
+          <LocalizationProvider dateAdapter={AdapterDayjs}>
+            <DemoContainer components={["DateTimePicker"]}>
+              <DateTimePicker
+                style={{ color: "white" }}
+                label="Seleciona o dia e a hora"
+                value={time}
+                onChange={(newValue) => {
+                  setTime(newValue);
+                }}
+                disabled={dataPickerDisable}
+              />
+            </DemoContainer>
+          </LocalizationProvider>
+        </div>
+
         <button
           type="submit"
           disabled={dataPickerDisable}
           onClick={createAppointment}
+          style={{ background: "#94d82d", color: "#21201F" }}
         >
           Registrar
         </button>

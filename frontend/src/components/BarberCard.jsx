@@ -5,10 +5,19 @@ export default function BarberCard(props) {
     <div
       className="barberCard"
       {...props}
-      style={props.selected ? { backgroundColor: "black" } : {}}
+      style={
+        props.selected ? { backgroundColor: "#94d82d", color: "black" } : {}
+      }
     >
-      <h1 style={{ whiteSpace: "nowrap" }}>Nome: {props.name}</h1>
-      <h1 style={{ whiteSpace: "nowrap" }}>Email: {props.email}</h1>
+      <span class="material-symbols-outlined">cut</span>
+      <div>
+        <h1 style={{ whiteSpace: "nowrap", fontSize: "13px" }}>
+          Nome: {props.name}
+        </h1>
+        <h1 style={{ whiteSpace: "nowrap", fontSize: "13px" }}>
+          Email: {props.email}
+        </h1>
+      </div>
     </div>
   );
 }

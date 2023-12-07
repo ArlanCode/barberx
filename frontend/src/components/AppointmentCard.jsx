@@ -8,10 +8,10 @@ export default function AppointmentCard(props) {
         style={{
           backgroundColor:
             props.state === "PENDING"
-              ? "gray"
+              ? "#868e96"
               : props.state === "CANCELED"
-              ? "red"
-              : "green",
+              ? "#f03e3e"
+              : "#69db7c",
         }}
       >
         <h1>Barbeiro: {props.username}</h1>

@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 
 export default function AppointmentsClients(props) {
   const changeState = async (state) => {
+    alert("Estado do agendamento sendo alterado!");
     if (state) {
       await fetch(`http://localhost:8080/appointments/${props.id}/accept`, {
         method: "PUT",
@@ -18,6 +19,7 @@ export default function AppointmentsClients(props) {
     <div
       style={{
         width: "50vw",
+        borderRadius: "10px",
         maxWidth: "1000px",
         backgroundColor:
           props.state === "PENDING"
@@ -30,9 +32,9 @@ export default function AppointmentsClients(props) {
       <div
         style={{
           display: "flex",
-          fontSize: "6px",
+          fontSize: "5px",
           justifyContent: "space-between",
-          color: "whiteSmoke",
+          color: "white",
           padding: "2px 14px",
         }}
       >
@@ -42,10 +44,26 @@ export default function AppointmentsClients(props) {
         <h1>Status: {props.state}</h1>
 
         {props.state === "PENDING" && (
-          <button onClick={() => changeState(true)}>Aceitar</button>
+          <button
+            onClick={() => changeState(true)}
+            style={{ padding: "0", margin: "0", fontSize: "10px" }}
+          >
+            Aceitar
+          </button>
         )}
         {props.state !== "CANCELED" && (
-          <button onClick={() => changeState(false)}>Recusar</button>
+          <button
+            onClick={() => changeState(false)}
+            style={{
+              padding: "0",
+              margin: "0",
+              fontSize: "10px",
+              backgroundColor: "red",
+              color: "white",
+            }}
+          >
+            Recusar
+          </button>
         )}
       </div>
     </div>

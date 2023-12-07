@@ -1,13 +1,7 @@
 import "../styles/barberDashboard.css";
 import { useEffect, useState } from "react";
 import AppointmentsClients from "../components/AppointmentsClients";
-import BarberCard from "../components/BarberCard";
-import AppointmentCard from "../components/AppointmentCard";
-import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
-import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
-import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
-import dayjs from "dayjs";
+import logo from "../assets/logo.png";
 
 export default function BarberDashboard() {
   const [user, setUser] = useState({});
@@ -38,19 +32,18 @@ export default function BarberDashboard() {
   }, [reload]);
 
   return (
-    <section
-      style={{
-        width: "100vw",
-        display: "flex",
-        justifyContent: "center",
-        flexDirection: "column",
-        alignItems: "center",
-      }}
-    >
+    <section className="barberDashboard">
+      <img src={logo} style={{ width: "20%" }} />
       <h1
-        style={{ fontSize: "30px", fontStyle: "italic", marginBottom: "30px" }}
+        style={{
+          fontSize: "25px",
+          fontStyle: "italic",
+          marginBottom: "30px",
+          color: "white",
+        }}
       >
-        Oi {user.username}, esses são seus agendamentos:
+        Oi <span style={{ color: "yellow" }}>{user.username}</span>, esses são
+        seus agendamentos:
       </h1>
       <div
         className="appointmentsClients"

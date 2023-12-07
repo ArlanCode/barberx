@@ -1,6 +1,8 @@
 import "../styles/login.css";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import logo from "../assets/logo.png"
+import { Link } from "react-router-dom";
 
 export default function Login({ isClient }) {
   const navigate = useNavigate();
@@ -35,13 +37,18 @@ export default function Login({ isClient }) {
         } else {
           navigate("/barberDashboard");
         }
+      }else{
+        alert('Usuário ou senha inválidos')
       }
     } catch (err) {}
   };
 
   return (
-    <div>
+    <div className="loginForm">
       <form onSubmit={handleForm} className="formDiv">
+        <Link to="/">
+          <img src={logo} style={{width:'100%'}}/>
+        </Link>
         <input
           className="inputGroup"
           type="text"
@@ -62,7 +69,7 @@ export default function Login({ isClient }) {
             handleFormEdit(e, "password");
           }}
         />
-        <button type="submit">Fazer login</button>
+        <button type="submit" style={{width:'100%', color:'#21201F',background:'white',marginTop:'15px'}}>Fazer login</button>
       </form>
     </div>
   );
