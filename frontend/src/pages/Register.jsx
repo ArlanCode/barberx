@@ -1,7 +1,9 @@
 import { useState } from "react";
 import "../styles/register.css";
+import { useNavigate } from "react-router-dom";
 
 export default function Register() {
+  const navigate = useNavigate();
   const [typeRegister, setTypeRegister] = useState("client");
   const [registerData, setRegisterData] = useState({
     username: "",
@@ -33,6 +35,11 @@ export default function Register() {
         },
         body: JSON.stringify(registerData),
       });
+      if(typeRegister === 'barber'){
+        navigate("/login/barber")
+      }else{
+        navigate("/login/client")
+      }
     } catch (err) {}
   };
 
