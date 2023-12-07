@@ -24,7 +24,7 @@ import com.designpatterns.barberx.state.State;
 @Service
 public class AppointmentFacade {
 
-   @Autowired
+    @Autowired
     IAppointmentRepository appointmentRepository;
 
     @Autowired
@@ -39,18 +39,19 @@ public class AppointmentFacade {
     @Autowired
     BarberFacade barberFacade;
 
-    
     public AppointmentModel createAppointment(AppointmentRecordDto appointmentRecordDto) {
-        BarberModel barber = barberRepository.findByUsername(appointmentRecordDto.barberUsername()).orElseThrow(() -> new AppointmentNotFoundException("Barber not found"));
-        ClientModel client = clientRepository.findByUsername(appointmentRecordDto.clientUsername()).orElseThrow(() -> new AppointmentNotFoundException("Customer not found"));
-        
+        BarberModel barber = barberRepository.findByUsername(appointmentRecordDto.barberUsername())
+                .orElseThrow(() -> new AppointmentNotFoundException("Barber not found"));
+        ClientModel client = clientRepository.findByUsername(appointmentRecordDto.clientUsername())
+                .orElseThrow(() -> new AppointmentNotFoundException("Customer not found"));
+
         AppointmentModel appointment = new AppointmentBuilder()
-        .withClient(client)
-        .withBarber(barber)
-        .withEnumState(EnumState.PENDING)
-        .withAppointmentDateTime(appointmentRecordDto.appointmentDateTime())
-        .build();
-        
+                .withClient(client)
+                .withBarber(barber)
+                .withEnumState(EnumState.PENDING)
+                .withAppointmentDateTime(appointmentRecordDto.appointmentDateTime())
+                .build();
+
         appointmentRepository.save(appointment);
         return appointment;
     }
@@ -61,7 +62,7 @@ public class AppointmentFacade {
 
     public AppointmentModel getAppointmentById(Long appointmentId) {
         return appointmentRepository.findById(appointmentId)
-            .orElseThrow(() -> new AppointmentNotFoundException("Appointment not found with ID: " + appointmentId));
+                .orElseThrow(() -> new AppointmentNotFoundException("Appointment not found with ID: " + appointmentId));
     }
 
     public List<AppointmentModel> getAllAppointmentsByIdBarber(Long idBarber) {
@@ -98,9 +99,9 @@ public class AppointmentFacade {
             case ACCEPTED:
                 state = new AcceptedState(appointment);
                 break;
-        
+
             default:
-                state =  new PendingState(appointment);
+                state = new PendingState(appointment);
                 break;
         }
 
@@ -125,8 +126,9 @@ public class AppointmentFacade {
         return status;
     }
 
-    public void notifyClient(AppointmentModel appointment){
-        clientFacade.notifyByEmail(appointment.getClient().getEmail(), "Appointment Update", "Your appointment state has been updated to: " + appointment.getEnumState());
+    public void notifyClient(AppointmentModel appointment) {
+        clientFacade.notifyByEmail(appointment.getClient().getEmail(), "Appointment Update",
+                "Your appointment state has been updated to: " + appointment.getEnumState());
     }
 
 }

@@ -2,7 +2,7 @@ import "../styles/login.css";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-export default function Login() {
+export default function Login({ isClient }) {
   const navigate = useNavigate();
   const [loginData, setLoginData] = useState({
     username: "",
@@ -17,9 +17,11 @@ export default function Login() {
   };
 
   const handleForm = async (event) => {
+    let route = `http://localhost:8080/clients/login`;
+    if (!isClient) route = `http://localhost:8080/barbers/login`;
     try {
       event.preventDefault();
-      const response = await fetch(`http://localhost:8080/clients/login`, {
+      const response = await fetch(route, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -28,8 +30,11 @@ export default function Login() {
       });
       if (response.status === 200) {
         localStorage.setItem("user", JSON.stringify(await response.json()));
-        navigate("/clientDashboard");
-        // console.log(await response.json());
+        if (isClient) {
+          navigate("/clientDashboard");
+        } else {
+          navigate("/barberDashboard");
+        }
       }
     } catch (err) {}
   };

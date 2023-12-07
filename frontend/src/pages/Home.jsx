@@ -7,12 +7,12 @@ export default function Home() {
     <container className="buttonsOption">
       <div className="buttonsDiv">
         <div style={{ display: "flex", gap: "20px" }}>
-          <Link to="login">
+          <Link to="login/client">
             <Button variant="primary" size="lg" style={{ width: "100%" }}>
               Login Cliente
             </Button>
           </Link>
-          <Link to="login">
+          <Link to="login/barber">
             <Button variant="primary" size="lg" style={{ width: "100%" }}>
               Login Barbeiro
             </Button>

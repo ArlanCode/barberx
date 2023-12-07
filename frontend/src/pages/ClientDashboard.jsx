@@ -9,6 +9,7 @@ import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
 import dayjs from "dayjs";
 
 export default function ClientDashboard() {
+  const [user, setUser] = useState({});
   const [allBarbers, setAllBarbers] = useState([]);
   const [allAppointments, setAllAppointments] = useState([]);
   const [time, setTime] = useState(dayjs());
@@ -21,9 +22,14 @@ export default function ClientDashboard() {
 
   const getAllAppointments = async () => {
     try {
-      const response = await fetch(`http://localhost:8080/appointments/all`, {
-        method: "GET",
-      });
+      const response = await fetch(
+        `http://localhost:8080/appointments/all/client/${
+          JSON.parse(localStorage.getItem("user")).id
+        }`,
+        {
+          method: "GET",
+        }
+      );
       setAllAppointments(await response.json());
     } catch (err) {}
   };
@@ -59,6 +65,8 @@ export default function ClientDashboard() {
   useEffect(() => {
     getAllBarbers();
     getAllAppointments();
+    let userParser = localStorage.getItem("user");
+    setUser(JSON.parse(userParser));
   }, []);
 
   useEffect(() => {
@@ -79,8 +87,12 @@ export default function ClientDashboard() {
       }}
     >
       <div className="clientDashboard">
-        <h1>Olá novamente!</h1>
-        <h3>(Seus agendamentos:)</h3>
+        <h1 style={{ fontSize: "30px", fontStyle: "italic" }}>
+          Oi {user.username}, com quem iremos marcar hoje?
+        </h1>
+        <h3 style={{ fontSize: "20px", fontStyle: "italic" }}>
+          (Seus agendamentos:)
+        </h3>
         <div
           className="appointmentsContainer"
           style={{
@@ -119,7 +131,9 @@ export default function ClientDashboard() {
           })}
         </div>
         <h3>-------------</h3>
-        <h1>Barbeiros Disponíveis:</h1>
+        <h1 style={{ fontSize: "25px", fontWeight: "bold" }}>
+          Barbeiros Disponíveis:
+        </h1>
 
         <div className="barbersContainer">
           {allBarbers.map((value) => {
@@ -132,7 +146,7 @@ export default function ClientDashboard() {
                   setDataAppointment({
                     ...dataAppointment,
                     barberUsername: value.username,
-                    clientUsername: "joao",
+                    clientUsername: user.username,
                   });
                   setDataPickerDisable(false);
                 }}
